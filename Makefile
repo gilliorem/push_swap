@@ -1,28 +1,32 @@
-NAME =		push_swap
-CC =		gcc
-CFLAGS = 	-Wall -Wextra -Werror -g
-RM = 		rm -rf
-SRC = 		parsing.c \
-		main.c
-OBJ = $(SRC:.c=.o)
-INC_DIRS = . ft_printf libft
-INCLUDES = $(addprefix -I,$(INC_DIRS))
-LIBDIR = ft_printf
-LIBA = $(LIBDIR)/libftprintf.a
-LIBS =
+NAME = push_swap
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+SRC_DIR = src
+SRC = main.c parse.c stack.c operations.c sort_small.c index.c sort_big.c utils.c
+OBJ = $(addprefix $(SRC_DIR)/,$(SRC:.c=.o))
+INCLUDES = -Iinclude -Ift_printf
+FT_DIR = ft_printf
+FT_LIB = $(FT_DIR)/libftprintf.a
 
+all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBA)
-		$(NAME) $(OBJ)
+$(NAME): $(OBJ) $(FT_LIB)
+	$(CC) $(CFLAGS) $(OBJ) $(FT_LIB) -o $(NAME)
 
-all : $(NAME)
+$(FT_LIB):
+	$(MAKE) -C $(FT_DIR)
 
-clean : 
-		$(RM) $(OBJ)
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-fclean : clean
-	$(RM) $(NAME)
+clean:
+	rm -f $(OBJ)
+	$(MAKE) -C $(FT_DIR) clean
 
-re : fclean all
+fclean: clean
+	rm -f $(NAME)
+	$(MAKE) -C $(FT_DIR) fclean
+
+re: fclean all
 
 .PHONY: all clean fclean re
