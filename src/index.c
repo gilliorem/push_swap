@@ -24,24 +24,28 @@ static void sort_array(int *arr, int size)
     }
 }
 
-void index_stack(t_node *a)
+static int *fill_array(t_node *a, int size)
 {
-    int size = stack_size(a);
     int *arr;
     int i;
-    t_node *tmp;
 
     arr = (int *)malloc(sizeof(int) * size);
     if (!arr)
-        return ;
-    tmp = a;
+        return NULL;
     i = 0;
-    while (tmp)
+    while (a)
     {
-        arr[i++] = tmp->value;
-        tmp = tmp->next;
+        arr[i++] = a->value;
+        a = a->next;
     }
-    sort_array(arr, size);
+    return arr;
+}
+
+static void assign_indices(t_node *a, int *arr, int size)
+{
+    int i;
+    t_node *tmp;
+
     tmp = a;
     while (tmp)
     {
@@ -57,5 +61,19 @@ void index_stack(t_node *a)
         }
         tmp = tmp->next;
     }
+}
+
+void index_stack(t_node *a)
+{
+    int size;
+    int *arr;
+
+    size = stack_size(a);
+    arr = fill_array(a, size);
+    if (!arr)
+        return ;
+    sort_array(arr, size);
+    assign_indices(a, arr, size);
     free(arr);
 }
+

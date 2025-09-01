@@ -24,54 +24,33 @@ void sort_three(t_node **a)
         rra(a);
 }
 
+static void move_min_to_b(t_node **a, t_node **b)
+{
+    int pos;
+    int size;
+
+    size = stack_size(*a);
+    pos = find_min_position(*a);
+    if (pos <= size / 2)
+        while (pos-- > 0)
+            ra(a);
+    else
+        while (pos++ < size)
+            rra(a);
+    pb(a, b);
+}
+
 void sort_four(t_node **a, t_node **b)
 {
-    int pos = find_min_position(*a);
-
-    if (pos == 1)
-        ra(a);
-    else if (pos == 2)
-    {
-        ra(a);
-        ra(a);
-    }
-    else if (pos == 3)
-        rra(a);
-    pb(a, b);
+    move_min_to_b(a, b);
     sort_three(a);
     pa(a, b);
 }
 
 void sort_five(t_node **a, t_node **b)
 {
-    int pos = find_min_position(*a);
-
-    if (pos == 1)
-        ra(a);
-    else if (pos == 2)
-    {
-        ra(a);
-        ra(a);
-    }
-    else if (pos == 3)
-    {
-        rra(a);
-        rra(a);
-    }
-    else if (pos == 4)
-        rra(a);
-    pb(a, b);
-    pos = find_min_position(*a);
-    if (pos == 1)
-        ra(a);
-    else if (pos == 2)
-    {
-        ra(a);
-        ra(a);
-    }
-    else if (pos == 3)
-        rra(a);
-    pb(a, b);
+    move_min_to_b(a, b);
+    move_min_to_b(a, b);
     sort_three(a);
     pa(a, b);
     pa(a, b);

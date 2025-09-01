@@ -2,7 +2,9 @@ NAME = push_swap
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC_DIR = src
-SRC = main.c parse.c stack.c operations.c sort_small.c index.c sort_big.c utils.c
+SRC = main.c parse.c stack_basic.c stack_utils.c \
+      op_swap.c op_push.c op_rotate.c op_reverse.c \
+      sort_small.c index.c sort_big.c utils.c
 OBJ = $(addprefix $(SRC_DIR)/,$(SRC:.c=.o))
 INCLUDES = -Iinclude -Ift_printf
 FT_DIR = ft_printf
